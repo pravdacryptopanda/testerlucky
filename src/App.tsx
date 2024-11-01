@@ -3,8 +3,18 @@ import bridge, { UserInfo } from '@vkontakte/vk-bridge';
 import { View, SplitLayout, SplitCol, ScreenSpinner } from '@vkontakte/vkui';
 import { useActiveVkuiLocation } from '@vkontakte/vk-mini-apps-router';
 
-import { Persik, Home } from './panels';
+import { Home } from './panels';
 import { DEFAULT_VIEW_PANELS } from './routes';
+
+function applyScheme(appearance: string) {
+  const body = document.body;
+
+  // Удаляем предыдущие классы темы
+  body.classList.remove('bright_light', 'space_gray');
+
+  // Добавляем новый класс темы
+  body.className = appearance;
+}
 
 export const App = () => {
   const { panel: activePanel = DEFAULT_VIEW_PANELS.HOME } = useActiveVkuiLocation();
@@ -20,12 +30,20 @@ export const App = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    bridge.subscribe(({ detail: { type, data } }) => {
+      if (type === 'VKWebAppUpdateConfig') { // Получаем тему клиента.
+        console.log('scheme', data);
+        applyScheme(data.appearance);
+      }
+    })
+  })
+
   return (
     <SplitLayout popout={popout}>
       <SplitCol>
         <View activePanel={activePanel}>
           <Home id="home" fetchedUser={fetchedUser} />
-          <Persik id="persik" />
         </View>
       </SplitCol>
     </SplitLayout>
