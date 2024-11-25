@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import {
   Panel,
-  PanelHeader,
   Header,
   Group,
   Cell,
@@ -19,11 +18,9 @@ export interface HomeProps extends NavIdProps {
 
 export const Home: FC<HomeProps> = ({ id, fetchedUser }) => {
   const { photo_200, city, first_name, last_name } = { ...fetchedUser };
-  // const routeNavigator = useRouteNavigator();
 
   return (
     <Panel id={id}>
-      <PanelHeader>Главная</PanelHeader>
       {fetchedUser && (
         <Group header={<Header mode="secondary"></Header>}>
           <Cell before={photo_200 && <Avatar src={photo_200} />} subtitle={city?.title}>

@@ -5,11 +5,17 @@
   text-align: center;
   font-family: 'Kyiv Type Serif', serif;
   font-weight: 500;
-  color: #000000; /* Цвет текста */
+  color: #000000;
 }
 
 .dark .luck-tester-container {
-    color: #fff; /* Белый цвет текста */
+    color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .luck-tester-container {
+      color: #fff;
+  }
 }
 
 .circle {

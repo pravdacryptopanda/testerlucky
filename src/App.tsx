@@ -8,11 +8,6 @@ import { DEFAULT_VIEW_PANELS } from './routes';
 
 function applyScheme(appearance: string) {
   const body = document.body;
-
-  // Удаляем предыдущие классы темы
-  body.classList.remove('bright_light', 'space_gray');
-
-  // Добавляем новый класс темы
   body.className = appearance;
 }
 
@@ -32,8 +27,7 @@ export const App = () => {
 
   useEffect(() => {
     bridge.subscribe(({ detail: { type, data } }) => {
-      if (type === 'VKWebAppUpdateConfig') { // Получаем тему клиента.
-        console.log('scheme', data);
+      if (type === 'VKWebAppUpdateConfig') {
         applyScheme(data.appearance);
       }
     })
